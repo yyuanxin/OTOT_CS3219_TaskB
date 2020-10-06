@@ -25,15 +25,8 @@ if(!db)
 else
     console.log("Db connected successfully")
 
-// Setup server port
-var port = process.env.PORT || 8080;
-
-// Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
-
 // Use Api routes in the App
+app.get('/', (req, res) => res.send('Hello World with Express'));
 app.use('/api', apiRoutes);
-// Launch app to listen to specified port
-app.listen(port, function () {
-    console.log("Running App on port " + port);
-});
+
+exports.taskB = app;

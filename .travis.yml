@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - 12.17
+cache:
+yarn: true
+directories:
+  - "$HOME/google-cloud-sdk/"
+env:
+global:
+before_install:
+  - openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv
+    -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
+install:
+  - npm install
+before_deploy:
+  - gcloud version || true
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export
+    CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash > /dev/null;
+    fi
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud version
+  - gcloud components update
+  - openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
+  - gcloud auth activate-service-account user-975@cs3219-otot-taskb.iam.gserviceaccount.com --key-file=gcloud-service-key.json
+  - gcloud config set project cs3219-otot-taskb
+deploy:
+  - provider: script
+    script:
+      - gcloud --quiet beta functions deploy cs3219-otot-function --entry-point taskB --source https://source.developers.google.com/projects/cs3219-otot-taskb/repos/github_yyuanxin_otot_cs3219_taskb/moveable-aliases/master --trigger-http
+    skip_cleanup: true
