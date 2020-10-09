@@ -3,7 +3,7 @@ let router = require('express').Router();
 // Set default API response
 router.get('/', function (req, res) {
     res.json({
-        status: 'API Its Working',
+        status: 'API is Working',
         message: 'Welcome to the app crafted with love!',
     });
 });
