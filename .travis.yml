@@ -12,6 +12,8 @@ before_install:
     -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
 install:
   - npm install
+  - npm run install-client
+  - npm run install-server
 before_deploy:
   - gcloud version || true
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export
