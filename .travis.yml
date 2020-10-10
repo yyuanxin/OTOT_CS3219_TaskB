@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - 12.17
+cache:
+yarn: true
+install:
+  - npm install
+  - npm run install-client
+  - npm run install-server
+script:
+  - npm run test
