@@ -1,16 +1,14 @@
 {
   "name": "otot_cs3219_taskb",
   "version": "1.0.0",
-  "description": "CS3219 OTOT Assignment - Task B",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-client": "cd frontend && npm install",
+    "install-server": "cd backend && npm install",
+    "client": "npm start --prefix frontend",
+    "server": "npm start --prefix backend",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "yuanxin",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.10.8"
+    "concurrently": "^5.3.0"
   }
 }
