@@ -4,16 +4,19 @@ let express = require('express');
 let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
+// Import CORS
+let cors = require('cors');
 // Initialise the app
 let app = express();
 
 // Import routes
-let apiRoutes = require("./backend/api-routes");
+let apiRoutes = require("./api-routes");
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(cors());
 // Connect to Mongoose and set connection variable
 let mongolink = 'mongodb+srv://yuanxin:yuanxin@taskb.bhsea.gcp.mongodb.net/OTOT?retryWrites=true&w=majority';
 mongoose.connect(mongolink, { useNewUrlParser: true, useUnifiedTopology: true});
@@ -25,15 +28,11 @@ if(!db)
 else
     console.log("Db connected successfully")
 
-// Setup server port
-var port = process.env.PORT || 8080;
-
-// Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
-
 // Use Api routes in the App
+app.get('/', (req, res) => res.send('Hello World with Express'));
 app.use('/api', apiRoutes);
-// Launch app to listen to specified port
-app.listen(port, function () {
-    console.log("Running App on port " + port);
-});
+
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+    console.log('Connected to port ' + port)
+})
